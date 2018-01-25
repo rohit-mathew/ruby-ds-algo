@@ -6,26 +6,23 @@ class Graph
     @routes_desc = Hash.new 
   end
 
-  def dfs root, dest, visited
-    puts "Root : #{root} and dest : #{dest}"
-    if root == dest 
-      return true
-    end
-    visited[root] = 1
-    for i in 0..(vertex_count - 1)
-      if @adj_hash[[root, i]] == 1
-        if visited[i] == 0
-          if dfs(i, dest, visited) == true
-            return true
-          end
-        end
-      end
-    end
-    return false
-  end
-
   def put array
-
+    source = array[0]
+    dest = array[1]
+    to_do = [source]
+    done = []
+    if !routes_desc.has_key?(source)
+      vertex_count += 1
+    end
+    if !routes_desc.has_key?(dest)
+      vertex_count += 1
+    end
+    routes_desc[[source, dest]] == 1
+    routes_desc[[dest, source]] == 1
+    while !todo.is_empty?
+      current = todo.pop
+      hash_select = routes_desc.select {}
+    end
   end
 
   def get array

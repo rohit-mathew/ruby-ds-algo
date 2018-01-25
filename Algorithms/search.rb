@@ -17,23 +17,46 @@ def binary_serach_itr(array, candidate)
 end
 
 # Recursive binary search
-def binary_search_rec(array, candidate) 
-  if array.length == 0
+def binary_search_rec(array, candidate, low, high) 
+  if high < low
     return "Item not found" 
   end
-  low = 0
-  high = array.length - 1
   middle = (low + high)/2
   if candidate == array[middle]
     return "#{candidate} found!"
   else
     if candidate < array[middle]
-      return binary_search_helper(array[low, middle - 1], candidate)
+      return binary_search_rec(array, candidate, low, middle - 1)
     else 
-      return binary_search_helper(array[middle + 1, high], candidate)
+      return binary_search_rec(array, candidate, middle + 1, high)
     end
   end
 end
 
-puts binary_serach_itr([1,2,3,4,5,6,7,8], 8)
-# 8 found
+def rotated_search array, candidate, low, high
+  if high < low
+    return false
+  end
+  middle = (high + low)/2
+  if array[middle] == candidate
+    return true
+  elsif (array[middle] > candidate)
+    if (candidate >= array[low])
+      # Search candidate can be in the left sorted part of the array
+      binary_search_rec(array, candidate, low, middle - 1)
+    else
+      rotated_search(array, candidate, middle +1, high)
+    end
+  else
+    if (candidate <= array[high])
+      #Search candidate can be in the right sorted part of the array
+      binary_search_rec(array, candidate, middle + 1, high)
+    else
+      rotated_search(array, candidate, low, middle - 1)
+    end
+  end
+end
+
+arr = [5, 6, 7, 8, 9, 10, 1, 2, 3]
+arr1 = [1,1,1,1,1,1,1,1,1,1]
+puts rotated_search(arr1, 2, 0, arr1.length - 1)
